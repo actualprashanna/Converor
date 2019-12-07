@@ -147,9 +147,9 @@ public class MainPanel extends JPanel {
 		btnExit.setBounds(415, 232, 95, 29);
 		add(btnExit);
 
-		chkReverse = new JCheckBox("Reverse");
+		chkReverse = new JCheckBox("Reverse Convertor");
 		chkReverse.setToolTipText("select to reverse the operation");
-		chkReverse.setBounds(415, 117, 95, 29);
+		chkReverse.setBounds(415, 117, 150, 29);
 		add(chkReverse);
 
 
@@ -212,7 +212,7 @@ public class MainPanel extends JPanel {
 			NumberFormat formatter = new DecimalFormat("#.##");
 			
 			
-			if (text.isEmpty() == b) {
+			if (text.isEmpty() == b) { //yaha arko elif statement rakhne
 				try {
 				double value = Double.parseDouble(text);
 
@@ -260,7 +260,57 @@ public class MainPanel extends JPanel {
 				}
 				
 				
-		}else {
+		}
+			else if (text.isEmpty()) {
+				try {
+				double value = Double.parseDouble(text);
+
+				// the factor applied during the conversion
+				double factor = 0;
+
+				// the offset applied during the conversion.
+				double offset = 0;
+
+				// Setup the correct factor/offset values depending on required conversion
+				switch (combo.getSelectedIndex()) {
+
+				case 0: // inches/cm
+					factor = 2.54;
+					break;
+					
+				case 1:	//miles to nautical miles
+					factor=0.594;
+					break;
+					
+				case 2: //acre to hectors
+					factor=0.404686;
+					break;
+				case 3: //miles per hour to km per hour
+					factor=1.60934;
+					break;
+				case 4: //Yards to meters
+					factor=0.9144;
+					break;
+				case 5: //Celcius to farenheit
+					factor=0.404686;
+					offset=32;
+					break;
+				case 6: //Degrees to radian
+					factor=0.0174533;
+					break;
+				}
+				double result = factor * value + offset;
+				
+				lblResult.setText(formatter.format(result));
+				}catch (NumberFormatException e) {
+					
+					JOptionPane.showMessageDialog(null, "Please Enter Correctly!!");
+					return;
+				}
+				
+				
+		}
+			else {
 					double value = Double.parseDouble(text);
 
 					// the factor applied during the conversion
